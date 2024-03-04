@@ -16,4 +16,21 @@ class BookDB():
             return True
         except:
             return False
+class AuthorDB():
+    
+    def add_author(self, cur, data):
+        try:
+            cur.execute("insert into authors(fullname, date_born, date_death, biography) values (%s, %s, %s, %s)", data)
+            return True
+        except:
+            return False
         
+    def get_author(self, cur, fullname):
+        cur.execute('select * from authors where fullname = %s', (fullname,))
+        author = cur.fetchone()
+        return author
+    
+    def get_db_authors(self, cur):
+        cur.execute("select * from authors;")
+        authors = cur.fetchall()
+        return authors
