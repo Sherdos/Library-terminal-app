@@ -1,36 +1,48 @@
 class BookDB():
     
-    def get_db_books(self, cur):
-        cur.execute("select * from books;")
-        books = cur.fetchall()
+    def __init__(self, cur):
+        self.cur = cur
+    
+    def get_db_books(self):
+        self.cur.execute("select * from books;")
+        books = self.cur.fetchall()
         return books
     
-    def get_book(self, cur, title):
-        cur.execute('select * from books where title = %s', (title,))
-        book = cur.fetchone()
+    def get_book(self, title):
+        self.cur.execute('select * from books where title = %s', (title,))
+        book = self.cur.fetchone()
         return book
     
-    def add_book(self, cur, title, price):
+    def add_book(self, title, price):
         try:
-            cur.execute("insert into books(title, price) values (%s, %s)", (title, price))
+            self.cur.execute("insert into books(title, price) values (%s, %s)", (title, price))
             return True
         except:
             return False
-class AuthorDB():
     
-    def add_author(self, cur, data):
+    def get_category(self, id):
+        self.cur.execute('select string_agg(c.title, ", ") c.title from books as b join book_category as bc on bc.book_id = %s join categories as c on bc.category_id = c.id', (id,))
+        category = self.cur.fetchone()
+        return category
+    
+class AuthorDB():
+    def __init__(self, cur):
+        self.cur = cur
+    
+    def add_author(self, data):
         try:
-            cur.execute("insert into authors(fullname, date_born, date_death, biography) values (%s, %s, %s, %s)", data)
+            self.cur.execute("insert into authors(fullname, date_born, date_death, biography) values (%s, %s, %s, %s)", data)
             return True
         except:
             return False
         
-    def get_author(self, cur, fullname):
-        cur.execute('select * from authors where fullname = %s', (fullname,))
-        author = cur.fetchone()
+    def get_author(self, fullname):
+        self.cur.execute('select * from authors where fullname = %s', (fullname,))
+        author = self.cur.fetchone()
+
         return author
     
-    def get_db_authors(self, cur):
-        cur.execute("select * from authors;")
-        authors = cur.fetchall()
+    def get_db_authors(self):
+        self.cur.execute("select * from authors;")
+        authors = self.cur.fetchall()
         return authors

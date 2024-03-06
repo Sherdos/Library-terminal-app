@@ -4,7 +4,7 @@ class Book():
         self.title = title
         self.price = price
         self.author = []
-        self.category = []
+        self.category = ''
         self.genre = []
         self.favorite = []
         self.buy = []
@@ -12,6 +12,9 @@ class Book():
     def get_info_low(self):
         print(f'Название книги - {self.title}, цена {self.price}')
 
+    def get_info_full(self):
+        print(f'Название книги - {self.title}, цена {self.price}, категории {self.category}')
+        
 class Author():
     def __init__(self, id, fullname, date_born, date_death, biography):
         self.id = id
@@ -23,3 +26,6 @@ class Author():
     
     def get_info_low(self):
         print(f'ФИО - {self.fullname}, умер в {self.date_death}')
+        
+    def get_info_full(self):
+        print(f'ФИО - {self.fullname}, родилься в {self.date_born}, умер в {self.date_death}')

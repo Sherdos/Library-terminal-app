@@ -1,4 +1,5 @@
 import psycopg2
+import conf 
 
 from views import BookView, AuthorView
 
@@ -6,38 +7,40 @@ from views import BookView, AuthorView
 
 
 def main():
-    conn = psycopg2.connect("dbname=library user=postgres password=2007")
+    conn = psycopg2.connect(f"dbname={conf.DBNAME} user={conf.USER} password={conf.PASSWORD}")
     cur = conn.cursor()
 
 
     while True:
-        print('1 - Книги, 2 - Авторы, 3 - Выйти')
+        print('1 - Книги \n 2 - Авторы \n 3 - Выйти')
         command = input('Введите комманду - ')
         if command == '1':
             while True:
-                print('1 - посмотреть все книги, 2 поиск книги , 3 добавить книгу, 4 выйти')
+                print('1 - посмотреть все книги \n 2 поиск книги \n 3 добавить книгу \n 4 выйти')
                 command = input('Введите комманду - ')
-                book = BookView()
+                book = BookView(cur)
                 if command == '1':
-                    book.view_all_books(cur)
+                    book.view_all_books()
+                elif command == '2':
+                    book.view_search_book()
+                elif command == '3':
+                    book.view_add_book()
+                    conn.commit()
                 elif command == '4':
                     print('Вернулись в Меню')
                     break
-                elif command == '3':
-                    book.view_add_book(cur)
-                    conn.commit()
-                elif command == '2':
-                    book.view_search_book(cur)
         elif command == '2':
             while True:
-                print('1 - посмотреть всех авторов, 2 поиск автора , 3 добавить автора, 4 выйти')
+                print('1 - посмотреть всех авторов \n 2 поиск автора \n 3 добавить автора \n 4 выйти')
                 command = input('Введите комманду - ')
-                author = AuthorView()
-                if command == '3':
-                    author.add_author(cur)
+                author = AuthorView(cur)
+                if command == '1':
+                    author.view_all_authors()
+                elif command == '2':
+                    author.view_search_author()
+                elif command == '3':
+                    author.add_author()
                     conn.commit()
-                elif command == '1':
-                    author.view_all_authors(cur)
                 elif command == '4':
                     print('Вернулись в Меню')
                     break
