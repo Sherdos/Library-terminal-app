@@ -1,6 +1,6 @@
 from schems import Book, Author
 from db_models import BookDB, AuthorDB
-from functions import get_all, view_all
+from functions import get_all, view_all, view_full
 
 class BookView:
     def __init__(self, cur):
@@ -22,7 +22,8 @@ class BookView:
     def view_search_book(self ):
         title = get_all(['Название книги'])[0]
         result = self.book_db.get_book( title)
-        view_all((result, ),Book)
+        category = self.book_db.get_category(result[0])
+        view_full(result,Book,category )
         
 class AuthorView:
     

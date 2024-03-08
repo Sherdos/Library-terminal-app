@@ -21,7 +21,7 @@ class BookDB():
             return False
     
     def get_category(self, id):
-        self.cur.execute('select string_agg(c.title, ", ") c.title from books as b join book_category as bc on bc.book_id = %s join categories as c on bc.category_id = c.id', (id,))
+        self.cur.execute("select string_agg(c.title, ', ') from books as b join book_category as bc on bc.book_id = %s join categories as c on bc.category_id = c.id", (id,))
         category = self.cur.fetchone()
         return category
     

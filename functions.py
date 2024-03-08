@@ -13,9 +13,8 @@ def view_all(items, schem):
         chem = schem(*i)
         chem.get_info_low()     
 
-def view_all_full(items, schem):
-    for i in items:
-        chem = schem(*i)
-        chem.cotegory = 
-        chem.get_info_full()                
+def view_full(item, schem, category):
+    chem = schem(*item)
+    chem.category = category[0]
+    chem.get_info_full()                
 
