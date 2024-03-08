@@ -1,9 +1,14 @@
+
+
+from sqlite3 import Cursor
+
+
 class BookDB():
     
     def __init__(self, cur):
         self.cur = cur
     
-    def get_db_books(self):
+    def get_db_books(self) -> tuple|None: 
         self.cur.execute("select * from books;")
         books = self.cur.fetchall()
         return books
@@ -26,7 +31,7 @@ class BookDB():
         return category
     
 class AuthorDB():
-    def __init__(self, cur):
+    def __init__(self, cur:Cursor):
         self.cur = cur
     
     def add_author(self, data):

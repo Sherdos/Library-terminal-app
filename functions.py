@@ -1,6 +1,6 @@
-from schems import Book
+from schems import BaseSchem, Book
 
-def get_all(items):
+def get_all(items:tuple):
     data = []
     for i in items:
         item = input(f'Введите {i} - ')
@@ -8,13 +8,13 @@ def get_all(items):
     return tuple(data)
     
 
-def view_all(items, schem):
+def view_all(items, schem:BaseSchem):
     for i in items:
-        chem = schem(*i)
+        chem:BaseSchem = schem(*i)
         chem.get_info_low()     
 
-def view_full(item, schem, category):
-    chem = schem(*item)
+def view_full(item:tuple, category:tuple):
+    chem = Book(*item)
     chem.category = category[0]
     chem.get_info_full()                
 

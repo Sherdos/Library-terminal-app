@@ -1,6 +1,19 @@
-class Book():
-    def __init__(self, id, title, price):
+from datetime import date
+
+
+class BaseSchem():
+    def __init__(self, id:int):
         self.id = id
+
+    def get_info_low(self):
+        print(self.id)
+    
+    def get_info_full(self):
+        print(self.id)
+        
+class Book(BaseSchem):
+    def __init__(self, id:int, title:str, price:str):
+        super().__init__(id)
         self.title = title
         self.price = price
         self.author = []
@@ -15,9 +28,9 @@ class Book():
     def get_info_full(self):
         print(f'Название книги - {self.title}, цена {self.price}, категории {self.category}')
         
-class Author():
-    def __init__(self, id, fullname, date_born, date_death, biography):
-        self.id = id
+class Author(BaseSchem):
+    def __init__(self, id:int, fullname:str, date_born:date, date_death:date, biography:str):
+        super().__init__(id)
         self.fullname = fullname
         self.date_born = date_born
         self.date_death = date_death
